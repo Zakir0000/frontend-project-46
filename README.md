@@ -17,4 +17,5 @@ Examples of use:
 
 <h2 id="default-comparison-flat-json">Comparison of flat files (JSON)</h2>
 A simple comparison of 2 files with JSON extension without specifying the output data format.
+
 [![asciicast](https://asciinema.org/a/J3V7LAnSXpRGKDNjc4vY8kIgB.svg)](https://asciinema.org/a/J3V7LAnSXpRGKDNjc4vY8kIgB)
