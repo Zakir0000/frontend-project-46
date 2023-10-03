@@ -1,4 +1,4 @@
-make: my-check
+name: my-check
 on: push
 jobs:
   build:

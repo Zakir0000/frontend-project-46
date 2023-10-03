@@ -1,9 +1,9 @@
 # Project "Difference calculator"
 ### Hexlet tests and linter status:
-[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/Zakir0000/frontend-project-46/actions)
+[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/hexlet-check/badge.svg)][def]
 
 ### My tests status:
-[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/my-check/badge.svg)](https://github.com/Zakir0000/fronted-project-46/actions)
+[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/my-check/badge.svg)][def]
 
 
 ## About
@@ -22,3 +22,6 @@ Examples of use:
 A simple comparison of 2 files with JSON extension without specifying the output data format.
 
 [![asciicast](https://asciinema.org/a/J3V7LAnSXpRGKDNjc4vY8kIgB.svg)](https://asciinema.org/a/J3V7LAnSXpRGKDNjc4vY8kIgB)
+
+
+[def]: https://github.com/Zakir0000/frontend-project-46/actions
