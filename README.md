@@ -2,6 +2,9 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/Zakir0000/frontend-project-46/actions)
 
+### My tests status:
+[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/my-check/badge.svg)](https://github.com/Zakir0000/fronted-project-46/actions)
+
 
 ## About
 
