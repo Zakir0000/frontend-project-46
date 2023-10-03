@@ -2,10 +2,11 @@
 name: CI
 
 on:
-  - push
-
-env: 
-  CI: true
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
 
 jobs:
   build:
@@ -19,18 +20,16 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+
       - name: Install, lint & project 
         run: |
           make install
           make lint
           make test
         - name: Test & publish code coverage
-            Publish code coverage on Code Climate
-            https://github.com/paambaati/codeclimate-action
           uses: paambaati/codeclimate-action@v4.0.0
-           Add Code Climate secret key
           env:
-            CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_API_KEY }}
+            CODECLIMATE_API_KEY: ${{ secrets.CODECLIMATE_API_KEY }}
           with:
             coverageCommand: make test-coverage
             debug: true
