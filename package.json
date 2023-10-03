@@ -8,7 +8,7 @@
     "gendiff": "./bin/gendiff.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit"
+    "test": "jest --color --runInBand --bail"
   },
   "author": "Zakir_Khunkaev",
   "license": "ISC",
