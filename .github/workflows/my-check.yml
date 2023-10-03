@@ -20,9 +20,7 @@ jobs:
         run: |
           make install
           make test
-
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v4.0.0
+          
         with:
           codeclimate_api_key: ${{ secrets.CODECLIMATE_API_KEY }}
        
