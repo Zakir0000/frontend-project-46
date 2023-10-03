@@ -1,0 +1,33 @@
+# Name of workflow
+name: CI
+
+on:
+  - push
+
+env: 
+  CI: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      
+      -name: Install, lint & project
+        run: |
+          make install
+          make lint
+          make test
+        
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v4.0.0
+        env:
+          CODECLIMATE_API_KEY: ${{ secrets.CODECLIMATE_API_KEY }}
+       
