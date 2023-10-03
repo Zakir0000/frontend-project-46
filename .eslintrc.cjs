@@ -3,7 +3,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: 'eslint-config-airbnb-base',
+  extends: 'airbnb-base',
   overrides: [
   ],
   parserOptions: {
