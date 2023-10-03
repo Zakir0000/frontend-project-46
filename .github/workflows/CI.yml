@@ -1,35 +1,52 @@
 # Name of workflow
 name: CI
 
+# Trigger the workflow on push or pull request
 on:
-  push:
-    branches:
-      - '**'
-    tags:
-      - '**'
+  - push
+  - pull_request
 
 jobs:
   build:
+
+    # The type of machine to run the job on
     runs-on: ubuntu-latest
+
+    strategy:
+      # Node versions list
+      matrix:
+        node-version: [14.x]
+
     steps:
-      - name: Check-out repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+        # Check-out repository under GitHub workspace
+        # https://github.com/actions/checkout
+      - uses: actions/checkout@v2
+        # Step's name
+      - name: Use Node.js ${{ matrix.node-version }}
+        # Configures the node version used on GitHub-hosted runners
+        # https://github.com/actions/setup-node
+        uses: actions/setup-node@v1
+        # The Node.js version to configure
         with:
-          node-version: 18
-          cache: 'npm'
-
-      - name: Install, lint & project 
+          node-version: ${{ matrix.node-version }}
+      - name: npm install
+        # Install project
         run: |
           make install
+        # Add environment variables
+        env:
+          CI: true
+      - name: Run linter
+        # Run Linter
+        run: |
           make lint
-          make test
-        - name: Test & publish code coverage
-          uses: paambaati/codeclimate-action@v4.0.0
-          env:
-            CODECLIMATE_API_KEY: ${{ secrets.CODECLIMATE_API_KEY }}
-          with:
-            coverageCommand: make test-coverage
-            debug: true
+      - name: Test & publish code coverage
+        # Publish code coverage on Code Climate
+        # https://github.com/paambaati/codeclimate-action
+        uses: paambaati/codeclimate-action@v2.7.4
+        # Add Code Climate secret key
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_API_KEY }}
+        with:
+          coverageCommand: make test-coverage
+          debug: true
