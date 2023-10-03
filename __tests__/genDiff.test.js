@@ -4,16 +4,15 @@ const file1 = {
   'host': 'hexlet.io',
   'timeout': 50,
   'proxy': '123.234.53.22',
-  'follow': false
+  'follow': false,
 };
 const file2 = {
   'timeout': 20,
   'verbose': true,
-  'host': 'hexlet.io'
+  'host': 'hexlet.io',
 };
 
 test('gendiff', () => {
-
   expect(genDiff(file1, file2)).not.toBe(
     `{
       - follow: false
@@ -22,5 +21,6 @@ test('gendiff', () => {
       - timeout: 50
       + timeout: 20
       + verbose: true
-      }`);
+      }`,
+  );
 });
