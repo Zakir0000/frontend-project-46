@@ -20,7 +20,7 @@ jobs:
           node-version: 18
           cache: 'npm'
       
-      -name: Install, lint & project
+      - name: Install, lint & project 
         run: |
           make install
           make lint
@@ -30,4 +30,4 @@ jobs:
         uses: paambaati/codeclimate-action@v4.0.0
         env:
           CODECLIMATE_API_KEY: ${{ secrets.CODECLIMATE_API_KEY }}
-       
+
