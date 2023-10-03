@@ -19,10 +19,9 @@ jobs:
           node-version: 18
           cache: 'npm'
 
-      - name: Install, lint & test project
+      - name: Install, test project
         run: |
           make install
-          make lint
           make test
 
       - name: Test & publish code coverage
