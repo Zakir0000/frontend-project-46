@@ -34,4 +34,6 @@ jobs:
           ./cc-test-reporter after-build --exit-code $?
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_API_KEY }}
-
+        with:
+          coverageCommand: make test-coverage
+          debug: true
