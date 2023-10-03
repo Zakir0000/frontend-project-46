@@ -1,26 +1,22 @@
 name: my-check
 
 on:
-  - push
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check-out repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'npm'
+      - uses: actions/checkout@v3
 
       - name: Install, test project
         run: |
           make install
           make test
-          
         with:
           codeclimate_api_key: ${{ secrets.CODECLIMATE_API_KEY }}
        
