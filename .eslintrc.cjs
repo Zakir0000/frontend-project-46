@@ -15,6 +15,8 @@ module.exports = {
     'singlequote': 'off',
     'no-undef': 'off',
     'no-console': 'off',
+    'no-unused-vars': 'off',
+
     'import/extensions': ['error', 'ignorePackages'],
     'no-underscore-dangle': [2, { allow: ['__filename', '__dirname'] }],
   },

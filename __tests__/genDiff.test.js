@@ -4,7 +4,6 @@ import { fileURLToPath } from 'node:url';
 
 import { genDiff } from '../src/genDiff.js';
 
-
 const file1 = {
   'host': 'hexlet.io',
   'timeout': 50,
