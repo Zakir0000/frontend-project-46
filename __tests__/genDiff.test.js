@@ -1,4 +1,9 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { genDiff } from '../src/genDiff.js';
+
 
 const file1 = {
   'host': 'hexlet.io',

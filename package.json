@@ -2,10 +2,10 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/Zakir0000/frontend-project-46/actions)",
-  "main": "src/genDiff.js",
+  "main": "index.js",
   "type": "module",
   "bin": {
-    "gendiff": "./bin/gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "scripts": {
     "test": "jest --color --runInBand --bail"
