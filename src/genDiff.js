@@ -3,7 +3,7 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 
-export function genDiff(filePath1, filePath2) {
+export default (filePath1, filePath2) => {
   try {
     const resolvePath1 = path.resolve(filePath1);
     const resolvePath2 = path.resolve(filePath2);
@@ -33,4 +33,4 @@ export function genDiff(filePath1, filePath2) {
   } catch (error) {
     return `Error: ${error.message}`;
   }
-}
+};
