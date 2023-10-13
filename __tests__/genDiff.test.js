@@ -41,7 +41,7 @@ describe('genDiff', () => {
     host: hexlet.io
     proxy: 123.234.53.22
     timeout: 50
-}`; //The expected output when files are identical
+}`; //  The expected output when files are identical
 
     const actualDiff = genDiff(file1, file2);
     expect(actualDiff).toEqual(expectedDiff);
