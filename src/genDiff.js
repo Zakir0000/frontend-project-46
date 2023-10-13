@@ -29,7 +29,6 @@ function generateDifferences(data1, data2) {
       result.push(`    ${key}: ${value1}`);
     } else {
       result.push(`  - ${key}: ${value1}`);
-
       result.push(`  + ${key}: ${value2}`);
     }
   }

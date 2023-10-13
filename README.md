@@ -3,7 +3,7 @@
 [![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/Zakir0000/frontend-project-46/actions)
 
 ### My tests status:
-[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/my-check/badge.svg)](https://github.com/Zakir0000/actions/workflows/CI.yml)
+[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/my-check/badge.svg)]
 [![Maintainability](https://api.codeclimate.com/v1/badges/795803f5227e24ba10bd/maintainability)](https://codeclimate.com/github/Zakir0000/frontend-project-46/maintainability)
 
 
