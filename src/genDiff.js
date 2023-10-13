@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import { readFileSync } from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
+import { parseJSON, parseYAML } from './parsers.js';
 
 export function genDiff(filePath1, filePath2) {
   try {
@@ -15,33 +15,23 @@ export function genDiff(filePath1, filePath2) {
     const fileExtension1 = path.extname(resolvePath1);
     const fileExtension2 = path.extname(resolvePath2);
 
-    let data1, data2;
+    const data1 = fileExtension1 === '.yml' || fileExtension1 === '.yaml' ? parseYAML(file1) : parseJSON(file1);
 
-    if (fileExtension1 === '.yml' || fileExtension1 === '.yaml') {
-      data1 = yaml.load(file1);
-    } else {
-      data1 = JSON.parse(file1);
-    }
-
-    if (fileExtension2 === '.yml' || fileExtension2 === '.yaml') {
-      data2 = yaml.load(file2);
-    } else {
-      data2 = JSON.parse(file2);
-    }
+    const data2 = fileExtension2 === '.yml' || fileExtension2 === '.yaml' ? parseYAML(file2) : parseJSON(file2);
 
     const keys = new Set([...Object.keys(data1), ...Object.keys(data2)]);
     const result = [];
 
     for (const key of [...keys].sort()) {
       if (data1[key] === undefined) {
-        result.push(`+ ${key}: ${data2[key]}`);
+        result.push(`  + ${key}: ${data2[key]}`);
       } else if (data2[key] === undefined) {
-        result.push(`- ${key}: ${data1[key]}`);
+        result.push(`  - ${key}: ${data1[key]}`);
       } else if (data1[key] === data2[key]) {
-        result.push(`  ${key}: ${data1[key]}`);
+        result.push(`    ${key}: ${data1[key]}`);
       } else {
-        result.push(`- ${key}: ${data1[key]}`);
-        result.push(`+ ${key}: ${data2[key]}`);
+        result.push(`  - ${key}: ${data1[key]}`);
+        result.push(`  + ${key}: ${data2[key]}`);
       }
     }
 
