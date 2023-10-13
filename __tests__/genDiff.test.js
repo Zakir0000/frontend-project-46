@@ -32,4 +32,18 @@ describe('genDiff', () => {
     const actualDiff = genDiff(file1, file2);
     expect(actualDiff).toEqual(expectedDiff);
   });
+
+  it('should handle files with no differences', () => {
+    const file1 = '__fixtures__/identical.json';
+    const file2 = '__fixtures__/identical.json';
+    const expectedDiff = `{
+    follow: false
+    host: hexlet.io
+    proxy: 123.234.53.22
+    timeout: 50
+}`; //The expected output when files are identical
+
+    const actualDiff = genDiff(file1, file2);
+    expect(actualDiff).toEqual(expectedDiff);
+  });
 });
