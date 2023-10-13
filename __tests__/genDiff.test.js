@@ -32,7 +32,4 @@ describe('genDiff', () => {
     const actualDiff = genDiff(file1, file2);
     expect(actualDiff).toEqual(expectedDiff);
   });
-
 });
-
-

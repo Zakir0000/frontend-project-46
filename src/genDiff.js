@@ -31,10 +31,10 @@ export function genDiff(filePath1, filePath2) {
         result.push(`    ${key}: ${data1[key]}`);
       } else {
         result.push(`  - ${key}: ${data1[key]}`);
+
         result.push(`  + ${key}: ${data2[key]}`);
       }
     }
-
     return `{\n${result.join('\n')}\n}`;
   } catch (error) {
     return `Error: ${error.message}`;
