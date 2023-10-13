@@ -12,20 +12,25 @@ function getFileData(filePath) {
 }
 
 function generateDifferences(data1, data2) {
-  const keys = new Set([...Object.keys(data1), ...Object.keys(data2)]);
+  const keys1 = Object.keys(data1);
+  const keys2 = Object.keys(data2);
+  const allKeys = [...new Set([...keys1, ...keys2])];
   const result = [];
 
-  for (const key of [...keys].sort()) {
-    if (data1[key] === undefined) {
-      result.push(`  + ${key}: ${data2[key]}`);
-    } else if (data2[key] === undefined) {
-      result.push(`  - ${key}: ${data1[key]}`);
-    } else if (data1[key] === data2[key]) {
-      result.push(`    ${key}: ${data1[key]}`);
-    } else {
-      result.push(`  - ${key}: ${data1[key]}`);
+  for (const key of allKeys.sort()) {
+    const value1 = data1[key];
+    const value2 = data2[key];
 
-      result.push(`  + ${key}: ${data2[key]}`);
+    if (value1 === undefined) {
+      result.push(`  + ${key}: ${value2}`);
+    } else if (value2 === undefined) {
+      result.push(`  - ${key}: ${value1}`);
+    } else if (value1 === value2) {
+      result.push(`    ${key}: ${value1}`);
+    } else {
+      result.push(`  - ${key}: ${value1}`);
+
+      result.push(`  + ${key}: ${value2}`);
     }
   }
   return result;
