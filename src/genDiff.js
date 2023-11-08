@@ -1,15 +1,15 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable import/prefer-default-export */
-import { readFileSync } from "fs";
-import path from "path";
-import _ from "lodash";
-import { parseJSON, parseYAML } from "./parsers.js";
+import { readFileSync } from 'fs';
+import path from 'path';
+import _ from 'lodash';
+import { parseJSON, parseYAML } from './parsers.js';
 
 function getFileData(filePath) {
   const resolvePath = path.resolve(filePath);
-  const fileContent = readFileSync(resolvePath, "utf8");
+  const fileContent = readFileSync(resolvePath, 'utf8');
   const fileExtension = path.extname(resolvePath);
-  return fileExtension === ".yml" || fileExtension === ".yaml"
+  return fileExtension === '.yml' || fileExtension === '.yaml'
     ? parseYAML(fileContent)
     : parseJSON(fileContent);
 }
@@ -50,5 +50,5 @@ export function genDiff(filePath1, filePath2) {
   const data2 = getFileData(filePath2);
   const differences = generateDifferences(data1, data2);
 
-  return `{\n${differences.join("\n")}\n}`;
+  return `{\n${differences.join('\n')}\n}`;
 }
