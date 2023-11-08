@@ -6,8 +6,7 @@
 
 ### My tests status:
 
-[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/CI/badge.svg)]
-(https://github.com/Zakir0000/frontend-project-46/actions)
+[![Actions Status](https://github.com/Zakir0000/frontend-project-46/workflows/CI/badge.svg)](https://github.com/Zakir0000/frontend-project-46/actions)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/795803f5227e24ba10bd/maintainability)](https://codeclimate.com/github/Zakir0000/frontend-project-46/maintainability)
 
