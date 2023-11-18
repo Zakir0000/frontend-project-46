@@ -8,9 +8,11 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
         const children = iter(node.children, depth + 1);
         return ` ${indent} ${node.key}: {\n${children}\n${indent}    }`;
       } else if (node.type === "changed") {
-        return `${indent}- ${node.key}: ${node.value1}\n${indent}+ ${node.key}: ${node.value2}${indent}`;
+        return `${indent} - ${node.key}: ${node.value1}\n${indent} + ${node.key}: ${node.value2}${indent}`;
       } else if (_.isObject(node.value)) {
-        return ` ${indent} ${node.key}: ${JSON.stringify(node.value, null, 2)}`;
+        const entries = Object.entries(node.value);
+        const [key, value] = entries;
+        return `  ${indent} ${node.key}: {\n${indent}       ${key[0]}: ${key[1]}\n        }`;
       }
       const prefix =
         node.type === "added"
@@ -23,7 +25,7 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
           ? "  "
           : "  ";
 
-      return `${indent}${prefix}${node.key}: ${node.value}`;
+      return `${indent} ${prefix}${node.key}: ${node.value}`;
     });
     return lines.join("\n");
   };
