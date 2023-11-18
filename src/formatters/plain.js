@@ -1,7 +1,7 @@
 import _ from "lodash";
 
-const plainFormat = () => {
-  console.log("hello I am Plain Format!");
+const plainFormat = (diff) => {
+  console.log(diff);
 };
 
 export default plainFormat;

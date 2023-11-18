@@ -14,13 +14,6 @@ function getFileData(filePath) {
     : parseJSON(fileContent);
 }
 
-function stringifyValue(value) {
-  if (typeof value === "object" && value !== null) {
-    return JSON.stringify(value, null, 2);
-  }
-  return String(value);
-}
-
 export function genDiff(filePath1, filePath2, format) {
   const data1 = getFileData(filePath1);
   const data2 = getFileData(filePath2);

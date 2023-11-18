@@ -1,5 +1,6 @@
 import stylishFormat from "./stylish.js";
 import plainFormat from "./plain.js";
+import jsonFormat from "./json.js";
 
 const mainDiff = (diff, format = "stylish") => {
   switch (format) {
@@ -7,6 +8,8 @@ const mainDiff = (diff, format = "stylish") => {
       return stylishFormat(diff);
     case "plain":
       return plainFormat(diff);
+    case "json":
+      return jsonFormat(diff);
     default:
       throw new Error(`Unknown format: ${format}`);
   }
