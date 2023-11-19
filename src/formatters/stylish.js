@@ -2,7 +2,7 @@ import _ from "lodash";
 
 const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
   const iter = (currentValue, depth) => {
-    const indent = replacer.repeat(spaceCount * depth);
+    const indent = replacer.repeat((spaceCount - 2) * depth);
 
     function stringifyValue(value, depth = 1) {
       const indentSize = depth * spaceCount;
