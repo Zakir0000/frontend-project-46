@@ -11,8 +11,7 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
       if (_.isObject(value)) {
         return `{\n${Object.entries(value)
           .map(
-            ([key, val]) =>
-              `${indent}  ${key}: ${stringifyValue(val, depth + 1)}`
+            ([key, val]) => `${indent}${key}: ${stringifyValue(val, depth + 1)}`
           )
           .join("\n")}\n${bracketIndent}}`;
       }
@@ -22,7 +21,7 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
     const lines = currentValue.flatMap((node) => {
       if (node.type === "nested") {
         const children = iter(node.children, depth + 1);
-        return [` ${indent} ${node.key}: {`, ...children, `${indent}}`];
+        return [`${indent} ${node.key}: {`, ...children, `${indent}}`];
       }
 
       const prefix =
