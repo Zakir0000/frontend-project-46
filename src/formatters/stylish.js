@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
-  const iter = (currentValue, depth) => {
+  const iter = (currentValue, depth, topLevel = true) => {
     const indent = replacer.repeat(spaceCount * depth);
 
     function stringifyValue(value, depth = 1) {
@@ -19,8 +19,19 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
     }
 
     const lines = currentValue.flatMap((node) => {
-      const nestedIntend = replacer.repeat((spaceCount + 2) * depth);
+      const nestedIntend = replacer.repeat(spaceCount * depth);
       if (node.type === "nested") {
+        if (depth >= 1) {
+          const nestedIntend2 = replacer.repeat((spaceCount + 2) * depth);
+          const children = iter(node.children, depth + 1, false);
+          return topLevel
+            ? [
+                `${nestedIntend2}${node.key}: {`,
+                ...children,
+                `${nestedIntend2}}`,
+              ]
+            : children;
+        }
         const children = iter(node.children, depth + 1);
         return [
           `${nestedIntend}${node.key}: {`,
@@ -48,7 +59,7 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
         : `${indent}${prefix}`;
     });
 
-    return lines;
+    return topLevel ? ["{", ...lines, `}`] : lines;
   };
 
   return iter(diff, 1).join("\n");
