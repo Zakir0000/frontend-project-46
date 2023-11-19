@@ -2,7 +2,7 @@ import _ from "lodash";
 
 const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
   const iter = (currentValue, depth) => {
-    const indent = replacer.repeat((spaceCount - 2) * depth);
+    const indent = replacer.repeat(spaceCount * depth);
 
     function stringifyValue(value, depth = 1) {
       const indentSize = depth * spaceCount;
@@ -19,9 +19,14 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
     }
 
     const lines = currentValue.flatMap((node) => {
+      const nestedIntend = replacer.repeat((spaceCount + 2) * depth);
       if (node.type === "nested") {
         const children = iter(node.children, depth + 1);
-        return [`${indent}${node.key}: {`, ...children, `${indent}}`];
+        return [
+          `${nestedIntend}${node.key}: {`,
+          ...children,
+          `${nestedIntend}}`,
+        ];
       }
 
       const prefix =
