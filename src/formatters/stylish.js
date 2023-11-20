@@ -8,9 +8,9 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
     if (_.isObject(value)) {
       return `{\n${Object.entries(value)
         .map(
-          ([key, val]) => `  ${indent}${key}: ${stringifyValue(val, depth + 1)}`
+          ([key, val]) => `${indent}${key}: ${stringifyValue(val, depth + 1)}`
         )
-        .join("\n")}\n${bracketIndent}  }`;
+        .join("\n")}\n${bracketIndent}}`;
     }
     return value;
   }
@@ -26,8 +26,10 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
     const lines = Object.values(currentValue).flatMap((obj) => {
       if (obj.type === "nested") {
         const children = iter(obj.children, depth + 1);
-        return `  ${currentIndent}${obj.key}: ${children}`;
+        return `${currentIndent}${obj.key}: ${children}`;
       }
+
+      const currentIndV2 = replacer.repeat(indentSize - 2);
 
       const prefix =
         obj.type === "added"
@@ -44,8 +46,8 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
           : "  ";
 
       return Array.isArray(prefix)
-        ? prefix.map((line) => `${currentIndent}${line}`)
-        : `${currentIndent}${prefix}`;
+        ? prefix.map((line) => `${currentIndV2}${line}`)
+        : `${currentIndV2}${prefix}`;
     });
 
     return ["{", ...lines, `${bracketIndent}}`].join("\n");
