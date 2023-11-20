@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-export function makeDiff(data1, data2) {
+function makeDiff(data1, data2) {
   const keys1 = Object.keys(data1);
   const keys2 = Object.keys(data2);
   const unionKeys = _.union(keys1, keys2);
@@ -45,3 +45,5 @@ export function makeDiff(data1, data2) {
   });
   return diff;
 }
+
+export default makeDiff;

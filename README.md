@@ -23,8 +23,7 @@ Examples of use:
 
 1. <a href="#default-comparison-flat-json">"Comparison of flat files (JSON)"</a>
 2. <a href="#default-comparison-flat-yml">"Comparison of flat files (YAML)"</a>
-
-## CLI
+3. <a href="#default-comparison-nested-json">"Comparison of nested files (YAML)"</a>
 
 ```shell
 # Runs npm-publish with flag (--dry-run)
@@ -54,3 +53,8 @@ A simple comparison of 2 files with YAML extension without specifying the output
 [![asciicast](https://asciinema.org/a/1AE0I0aKMdMDzkJtujqqIzuSW.svg)](https://asciinema.org/a/1AE0I0aKMdMDzkJtujqqIzuSW)
 
 [def]: https://github.com/Zakir0000/frontend-project-46/actions
+
+<h2 id="default-comparison-nested-json">Comparison of nested files (JSON)</h2>
+A simple comparison of 2 nested files with JSON extension without specifying the output data format.
+
+[![asciicast](https://asciinema.org/a/OoUnwJPm820nCHYklnDMr479d.svg)](https://asciinema.org/a/OoUnwJPm820nCHYklnDMr479d)

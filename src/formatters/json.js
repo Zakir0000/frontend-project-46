@@ -7,8 +7,6 @@ function stringifyValue(value) {
   return String(value);
 }
 
-const jsonFormat = (diff) => {
-  return stringifyValue(diff);
-};
+const jsonFormat = (diff) => stringifyValue(diff);
 
 export default jsonFormat;

@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import path from "path";
 import _ from "lodash";
 import { parseJSON, parseYAML } from "./src/parsers.js";
-import { makeDiff } from "./src/genDiff.js";
+import makeDiff from "./src/genDiff.js";
 import mainDiff from "./src/formatters/index.js";
 
 function getFileData(filePath) {
