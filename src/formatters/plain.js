@@ -31,20 +31,31 @@ const plainFormat = (diff) => {
       }
 
       const complexVal = "[complex value]";
+
+      function addSemicolons(inputString) {
+        if (typeof inputString === "string") {
+          return `'${inputString}'`;
+        } else {
+          return inputString;
+        }
+      }
+
       const prefix =
         obj.type === "added"
           ? `Property '${newAncestry}' was added with value: ${
-              typeof obj.value !== "object" ? obj.value : complexVal
+              typeof obj.value !== "object"
+                ? addSemicolons(obj.value)
+                : complexVal
             }`
           : obj.type === "deleted"
           ? `Property '${newAncestry}' was removed`
           : obj.type === "changed" && typeof obj.value !== "object"
           ? [
-              `Property '${newAncestry}' was updated. From '${
+              `Property '${newAncestry}' was updated. From ${
                 typeof obj.value1 !== "object"
-                  ? stringifyValue(obj.value1)
+                  ? stringifyValue(addSemicolons(obj.value1))
                   : complexVal
-              }' to '${stringifyValue(obj.value2)}'`,
+              } to ${stringifyValue(addSemicolons(obj.value2))}`,
             ]
           : [];
 
