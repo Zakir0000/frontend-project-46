@@ -30,32 +30,41 @@ const plainFormat = (diff) => {
         return inputString;
       }
 
-      let prefix;
-      if (obj.type === 'added') {
-        prefix = `Property '${newAncestry}' was added with value: ${
-          typeof obj.value !== 'object' ? addSemicolons(obj.value) : complexVal
-        }`;
-      } else if (obj.type === 'deleted') {
-        prefix = `Property '${newAncestry}' was removed`;
-      } else if (obj.type === 'changed' && typeof obj.value !== 'object') {
-        prefix = [
-          `Property '${newAncestry}' was updated. From ${
-            obj.value1 === null
-              ? obj.value1
-              : typeof obj.value1 === 'object'
-              ? complexVal
-              : addSemicolons(obj.value1)
-          } to ${
-            obj.value2 === null
-              ? obj.value2
-              : typeof obj.value2 === 'object'
-              ? complexVal
-              : addSemicolons(obj.value2)
-          }`,
-        ];
-      } else {
-        prefix = [];
-      }
+      const generatePrefix = (object, ancty, complexV) => {
+        if (object.type === 'added') {
+          return `Property '${ancty}' was added with value: ${
+            typeof object.value !== 'object'
+              ? addSemicolons(object.value)
+              : complexV
+          }`;
+        }
+
+        if (object.type === 'deleted') {
+          return `Property '${ancty}' was removed`;
+        }
+
+        if (object.type === 'changed' && typeof object.value !== 'object') {
+          return [
+            `Property '${ancty}' was updated. From ${
+              object.value1 === null
+                ? object.value1
+                : typeof object.value1 === 'object'
+                ? complexV
+                : addSemicolons(object.value1)
+            } to ${
+              object.value2 === null
+                ? object.value2
+                : typeof object.value2 === 'object'
+                ? complexV
+                : addSemicolons(object.value2)
+            }`,
+          ];
+        }
+
+        return [];
+      };
+
+      const prefix = generatePrefix(obj, newAncestry, complexVal);
 
       return Array.isArray(prefix)
         ? prefix.flatMap((line) => `${line}`)
