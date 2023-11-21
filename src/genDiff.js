@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _ from 'lodash';
 
 function makeDiff(data1, data2) {
   const keys1 = Object.keys(data1);
@@ -7,38 +7,38 @@ function makeDiff(data1, data2) {
   const sortedUnionKeys = _.sortBy(unionKeys);
 
   function isPlainObject(obj) {
-    return obj !== null && typeof obj === "object" && !Array.isArray(obj);
+    return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
   }
 
   const diff = sortedUnionKeys.map((key) => {
     if (isPlainObject(data1[key]) && isPlainObject(data2[key])) {
       const children = makeDiff(data1[key], data2[key]);
-      return { key, type: "nested", children };
+      return { key, type: 'nested', children };
     }
     if (!_.has(data1, key)) {
       return {
         key,
-        type: "added",
+        type: 'added',
         value: data2[key],
       };
     }
     if (!_.has(data2, key)) {
       return {
         key,
-        type: "deleted",
+        type: 'deleted',
         value: data1[key],
       };
     }
     if (data1[key] === data2[key]) {
       return {
         key,
-        type: "unchanged",
+        type: 'unchanged',
         value: data1[key],
       };
     }
     return {
       key,
-      type: "changed",
+      type: 'changed',
       value1: data1[key],
       value2: data2[key],
     };

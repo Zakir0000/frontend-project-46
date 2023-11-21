@@ -1,9 +1,9 @@
-import genDiff from "../index.js";
+import genDiff from '../index.js';
 
-describe("genDiff", () => {
-  it("should compare JSON files and return differences", () => {
-    const file1 = "__fixtures__/deepFile1.json";
-    const file2 = "__fixtures__/deepFile2.json";
+describe('genDiff', () => {
+  it('should compare JSON files and return differences', () => {
+    const file1 = '__fixtures__/deepFile1.json';
+    const file2 = '__fixtures__/deepFile2.json';
     const expectedDiff = `{
     common: {
       + follow: false
@@ -53,9 +53,9 @@ describe("genDiff", () => {
     expect(actualDiff).toEqual(expectedDiff);
   });
 
-  it("should compare YAML files and return differences", () => {
-    const file1 = "__fixtures__/deepFile1.yml";
-    const file2 = "__fixtures__/deepFile2.yml";
+  it('should compare YAML files and return differences', () => {
+    const file1 = '__fixtures__/deepFile1.yml';
+    const file2 = '__fixtures__/deepFile2.yml';
     const expectedDiff = `{
     common: {
       + follow: false
@@ -106,9 +106,9 @@ describe("genDiff", () => {
     expect(actualDiff).toEqual(expectedDiff);
   });
 
-  it("should handle files with no differences", () => {
-    const file1 = "__fixtures__/identical.json";
-    const file2 = "__fixtures__/identical.json";
+  it('should handle files with no differences', () => {
+    const file1 = '__fixtures__/identical.json';
+    const file2 = '__fixtures__/identical.json';
     const expectedDiff = `{
     follow: false
     host: hexlet.io
@@ -120,9 +120,9 @@ describe("genDiff", () => {
     expect(actualDiff).toEqual(expectedDiff);
   });
 
-  it("should compare files with plain formatter and show difference", () => {
-    const file1 = "__fixtures__/deepFile4.json";
-    const file2 = "__fixtures__/deepFile3.json";
+  it('should compare files with plain formatter and show difference', () => {
+    const file1 = '__fixtures__/deepFile4.json';
+    const file2 = '__fixtures__/deepFile3.json';
     const expectedDiff = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to [complex value]
@@ -143,7 +143,7 @@ Property 'group4.nest.isNested' was removed
 Property 'group4.someKey' was added with value: true
 Property 'group4.type' was updated. From 'bas' to 'bar'`;
 
-    const actualDiff = genDiff(file1, file2, "plain");
+    const actualDiff = genDiff(file1, file2, 'plain');
     expect(actualDiff).toEqual(expectedDiff);
   });
 });

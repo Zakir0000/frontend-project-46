@@ -1,14 +1,14 @@
-import stylishFormat from "./stylish.js";
-import plainFormat from "./plain.js";
-import jsonFormat from "./json.js";
+import stylishFormat from './stylish.js';
+import plainFormat from './plain.js';
+import jsonFormat from './json.js';
 
-const mainDiff = (diff, format = "stylish") => {
+const mainDiff = (diff, format = 'stylish') => {
   switch (format) {
-    case "stylish":
+    case 'stylish':
       return stylishFormat(diff);
-    case "plain":
+    case 'plain':
       return plainFormat(diff);
-    case "json":
+    case 'json':
       return jsonFormat(diff);
     default:
       throw new Error(`Unknown format: ${format}`);

@@ -1,7 +1,5 @@
-import _ from "lodash";
-
 function stringifyValue(value) {
-  if (typeof value === "object" && value !== null) {
+  if (typeof value === 'object' && value !== null) {
     return JSON.stringify(value, null, 2);
   }
   return String(value);

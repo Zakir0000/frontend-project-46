@@ -1,31 +1,9 @@
-# Файл с настройками для редактора.
-#
-# Если вы разрабатываете в редакторе WebStorm, BBEdit, Coda или SourceLair
-# этот файл уже поддерживается и не нужно производить никаких дополнительных
-# действий.
-#
-# Если вы ведёте разработку в другом редакторе, зайдите
-# на https://editorconfig.org и в разделе «Download a Plugin»
-# скачайте дополнение для вашего редактора.
-
+# .editorconfig
 root = true
 
 [*]
-charset = utf-8
-end_of_line = lf
-indent_size = 2
 indent_style = space
-insert_final_newline = true
+indent_size = 2
+charset = utf-8
 trim_trailing_whitespace = true
-
-[*.md]
-trim_trailing_whitespace = false
-
-[Makefile]
-indent_style = tab
-
-[__fixtures__/expected.js]
-trim_trailing_whitespace = false
-
-[__fixtures__/expected_file.json]
-insert_final_newline = false
+insert_final_newline = true

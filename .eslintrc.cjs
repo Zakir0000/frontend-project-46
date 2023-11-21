@@ -11,8 +11,6 @@ module.exports = {
   },
   rules: {
     "quote-props": "off",
-    quotes: ["error", "double"],
-    singlequote: "off",
     "no-undef": "off",
     "comma-dangle": "off",
     "operator-linebreak": "off",

@@ -1,15 +1,14 @@
-import { readFileSync } from "fs";
-import path from "path";
-import _ from "lodash";
-import { parseJSON, parseYAML } from "./src/parsers.js";
-import makeDiff from "./src/genDiff.js";
-import mainDiff from "./src/formatters/index.js";
+import { readFileSync } from 'fs';
+import path from 'path';
+import { parseJSON, parseYAML } from './src/parsers.js';
+import makeDiff from './src/genDiff.js';
+import mainDiff from './src/formatters/index.js';
 
 function getFileData(filePath) {
   const resolvePath = path.resolve(filePath);
-  const fileContent = readFileSync(resolvePath, "utf8");
+  const fileContent = readFileSync(resolvePath, 'utf8');
   const fileExtension = path.extname(resolvePath);
-  return fileExtension === ".yml" || fileExtension === ".yaml"
+  return fileExtension === '.yml' || fileExtension === '.yaml'
     ? parseYAML(fileContent)
     : parseJSON(fileContent);
 }
