@@ -35,9 +35,8 @@ const plainFormat = (diff) => {
       function addSemicolons(inputString) {
         if (typeof inputString === "string") {
           return `'${inputString}'`;
-        } else {
-          return inputString;
         }
+        return inputString;
       }
 
       const prefix =
@@ -52,10 +51,18 @@ const plainFormat = (diff) => {
           : obj.type === "changed" && typeof obj.value !== "object"
           ? [
               `Property '${newAncestry}' was updated. From ${
-                typeof obj.value1 !== "object"
-                  ? stringifyValue(addSemicolons(obj.value1))
-                  : complexVal
-              } to ${stringifyValue(addSemicolons(obj.value2))}`,
+                obj.value1 === null
+                  ? obj.value1
+                  : typeof obj.value1 === "object"
+                  ? complexVal
+                  : addSemicolons(obj.value1)
+              } to ${
+                obj.value2 === null
+                  ? obj.value2
+                  : typeof obj.value2 === "object"
+                  ? complexVal
+                  : addSemicolons(obj.value2)
+              }`,
             ]
           : [];
 
