@@ -1,6 +1,6 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
+const stylishFormat = (diff, replacer = ' ', spaceCount = 4) => {
   function stringifyValue(value, depth = 1) {
     const indentSize = depth * spaceCount;
     const indent = replacer.repeat(spaceCount * depth);
@@ -10,7 +10,7 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
         .map(
           ([key, val]) => `${indent}${key}: ${stringifyValue(val, depth + 1)}`
         )
-        .join("\n")}\n${bracketIndent}}`;
+        .join('\n')}\n${bracketIndent}}`;
     }
     return value;
   }
@@ -24,7 +24,7 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
     const currentIndent = replacer.repeat(indentSize);
     const bracketIndent = replacer.repeat(indentSize - spaceCount);
     const lines = Object.values(currentValue).flatMap((obj) => {
-      if (obj.type === "nested") {
+      if (obj.type === 'nested') {
         const children = iter(obj.children, depth + 1);
         return `${currentIndent}${obj.key}: ${children}`;
       }
@@ -32,25 +32,25 @@ const stylishFormat = (diff, replacer = " ", spaceCount = 4) => {
       const currentIndV2 = replacer.repeat(indentSize - 2);
 
       const prefix =
-        obj.type === "added"
+        obj.type === 'added'
           ? `+ ${obj.key}: ${stringifyValue(obj.value, depth + 1)}`
-          : obj.type === "deleted"
+          : obj.type === 'deleted'
           ? `- ${obj.key}: ${stringifyValue(obj.value, depth + 1)}`
-          : obj.type === "unchanged"
+          : obj.type === 'unchanged'
           ? `  ${obj.key}: ${stringifyValue(obj.value, depth + 1)}`
-          : obj.type === "changed"
+          : obj.type === 'changed'
           ? [
               `- ${obj.key}: ${stringifyValue(obj.value1, depth + 1)}`,
               `+ ${obj.key}: ${stringifyValue(obj.value2, depth + 1)}`,
             ]
-          : "  ";
+          : '  ';
 
       return Array.isArray(prefix)
         ? prefix.map((line) => `${currentIndV2}${line}`)
         : `${currentIndV2}${prefix}`;
     });
 
-    return ["{", ...lines, `${bracketIndent}}`].join("\n");
+    return ['{', ...lines, `${bracketIndent}}`].join('\n');
   };
   return iter(diff, 1);
 };

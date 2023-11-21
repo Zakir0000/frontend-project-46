@@ -30,13 +30,20 @@ const plainFormat = (diff) => {
         return inputString;
       }
 
-      const generatePrefix = (object, ancty, complexV) => {
+      const getProperValue = (data) => {
+        if (typeof data !== 'object') {
+          return addSemicolons(data);
+        } if (data === null) {
+          return data;
+        }
+        return '[complex value]';
+      };
+
+      const generatePrefix = (object, ancty) => {
         if (object.type === 'added') {
-          return `Property '${ancty}' was added with value: ${
-            typeof object.value !== 'object'
-              ? addSemicolons(object.value)
-              : complexV
-          }`;
+          return `Property '${ancty}' was added with value: ${getProperValue(
+            object.value
+          )}`;
         }
 
         if (object.type === 'deleted') {
@@ -45,19 +52,9 @@ const plainFormat = (diff) => {
 
         if (object.type === 'changed' && typeof object.value !== 'object') {
           return [
-            `Property '${ancty}' was updated. From ${
-              object.value1 === null
-                ? object.value1
-                : typeof object.value1 === 'object'
-                ? complexV
-                : addSemicolons(object.value1)
-            } to ${
-              object.value2 === null
-                ? object.value2
-                : typeof object.value2 === 'object'
-                ? complexV
-                : addSemicolons(object.value2)
-            }`,
+            `Property '${ancty}' was updated. From ${getProperValue(
+              object.value1
+            )} to ${getProperValue(object.value2)}`,
           ];
         }
 
