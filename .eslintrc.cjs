@@ -12,10 +12,7 @@ module.exports = {
   rules: {
     "quote-props": "off",
     "no-undef": "off",
-    "comma-dangle": "off",
     "operator-linebreak": "off",
-    "no-nested-ternary": "off",
-    indent: "off",
     "no-console": "off",
     "no-unused-vars": "off",
     "one-var": "off",

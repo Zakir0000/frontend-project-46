@@ -42,7 +42,7 @@ const plainFormat = (diff) => {
       const generatePrefix = (object, ancty) => {
         if (object.type === 'added') {
           return `Property '${ancty}' was added with value: ${getProperValue(
-            object.value
+            object.value,
           )}`;
         }
 
@@ -53,7 +53,7 @@ const plainFormat = (diff) => {
         if (object.type === 'changed' && typeof object.value !== 'object') {
           return [
             `Property '${ancty}' was updated. From ${getProperValue(
-              object.value1
+              object.value1,
             )} to ${getProperValue(object.value2)}`,
           ];
         }
