@@ -32,26 +32,31 @@ const stylishFormat = (diff, replacer = ' ', spaceCount = 4) => {
       const currentIndV2 = replacer.repeat(indentSize - 2);
 
       const generatePrefix = (object, prefixDepth) => {
-        const result = [];
         if (object.type === 'added') {
-          result.push(
+          return [
             `+ ${obj.key}: ${stringifyValue(obj.value, prefixDepth + 1)}`,
-          );
-        } else if (object.type === 'deleted') {
-          result.push(
+          ];
+        }
+
+        if (object.type === 'deleted') {
+          return [
             `- ${obj.key}: ${stringifyValue(obj.value, prefixDepth + 1)}`,
-          );
-        } else if (object.type === 'unchanged') {
-          result.push(
+          ];
+        }
+
+        if (object.type === 'unchanged') {
+          return [
             `  ${obj.key}: ${stringifyValue(obj.value, prefixDepth + 1)}`,
-          );
-        } else if (object.type === 'changed') {
-          result.push([
+          ];
+        }
+
+        if (object.type === 'changed') {
+          return [
             `- ${obj.key}: ${stringifyValue(obj.value1, prefixDepth + 1)}`,
             `+ ${obj.key}: ${stringifyValue(obj.value2, prefixDepth + 1)}`,
-          ]);
+          ];
         }
-        return result.flat();
+        return [];
       };
 
       const prefix = generatePrefix(obj, depth);
