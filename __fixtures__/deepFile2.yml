@@ -4,7 +4,7 @@ common:
   setting3: null
   setting4: blah blah
   setting5:
-    key5: Winter is coming
+    key5: value5
   setting6:
     key: value
     ops: vops
@@ -12,7 +12,7 @@ common:
       wow: so much
 group1:
   foo: bar
-  baz: Ours is the Fury
+  baz: bars
   nest: str
 group3:
   deep:

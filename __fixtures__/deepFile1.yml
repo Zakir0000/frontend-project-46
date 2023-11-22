@@ -1,13 +1,13 @@
 common:
-  setting1: Valar
-  setting2: 1000
+  setting1: Value 1
+  setting2: 200
   setting3: true
   setting6:
     key: value
     doge:
       wow: ""
 group1:
-  baz: Jaime
+  baz: bas
   foo: bar
   nest:
     key: value

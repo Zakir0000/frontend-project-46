@@ -18,13 +18,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install, lint & test project
         run: |
           make install
           make lint
-          make test
 
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v4.0.0
