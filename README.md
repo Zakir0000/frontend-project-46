@@ -24,6 +24,7 @@ Examples of use:
 1. <a href="#default-comparison-flat-json">"Comparison of flat files (JSON)"</a>
 2. <a href="#default-comparison-flat-yml">"Comparison of flat files (YAML)"</a>
 3. <a href="#default-comparison-nested-json">"Comparison of nested files (YAML)"</a>
+4. <a href="#plain-comparison-nested-json">"Comparison with 'plain' format two nested files(JSON)"</a>
 
 ```shell
 # Runs npm-publish with flag (--dry-run)
@@ -58,3 +59,8 @@ A simple comparison of 2 files with YAML extension without specifying the output
 A simple comparison of 2 nested files with JSON extension without specifying the output data format.
 
 [![asciicast](https://asciinema.org/a/OoUnwJPm820nCHYklnDMr479d.svg)](https://asciinema.org/a/OoUnwJPm820nCHYklnDMr479d)
+
+<h2 id="plain-comparison-nested-json">Comparison of nested files with "plain" format (JSON)</h2>
+
+A simple comparison of 2 nested files with JSON extension with the output data format 'plain'.
+[![asciicast](https://asciinema.org/a/wltru1dRVRgnHHNYNXgM0VbaK.svg)](https://asciinema.org/a/wltru1dRVRgnHHNYNXgM0VbaK)
