@@ -17,7 +17,8 @@ function genDiff(filePath1, filePath2, format) {
   const data1 = getFileData(filePath1);
   const data2 = getFileData(filePath2);
   const diff = makeDiff(data1, data2);
-  return mainDiff(diff, format);
+  const result = mainDiff(diff, format);
+  return result;
 }
 
 export default genDiff;
