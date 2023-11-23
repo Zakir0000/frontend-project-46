@@ -9,7 +9,7 @@ program
   .argument('<filepath1>', 'first file to compare')
   .argument('<filepath2>', 'second file to compare')
   .option('-f, --format <type>', 'output format', 'stylish')
-  .action((filepath1, filepath2, options) => {
-    console.log(genDiff(filepath1, filepath2, options.format));
+  .action((filepath1, filepath2) => {
+    console.log(genDiff(filepath1, filepath2, program.opts().format));
   })
   .parse();
