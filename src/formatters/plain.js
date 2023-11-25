@@ -16,6 +16,11 @@ const plainFormat = (diff) => {
     const lines = currentValue.flatMap((obj) => {
       const name = obj.key;
       const newAncestry = customJoin(ancestry, name);
+      if (obj.type === 'root') {
+        const children = iter(obj.children, newAncestry);
+        return `${children}`;
+      }
+
       if (obj.type === 'nested') {
         const children = iter(obj.children, newAncestry);
         return `${children}`;
@@ -33,7 +38,8 @@ const plainFormat = (diff) => {
       const getProperValue = (data) => {
         if (typeof data !== 'object') {
           return addSemicolons(data);
-        } if (data === null) {
+        }
+        if (data === null) {
           return data;
         }
         return '[complex value]';

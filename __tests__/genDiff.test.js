@@ -7,7 +7,7 @@ const testCases = [
   ['deepFile1.json', 'deepFile2.json', undefined, 'stylish.txt'],
   ['deepFile1.yml', 'deepFile2.yml', 'stylish', 'stylish.txt'],
   ['deepFile1.json', 'deepFile2.json', 'plain', 'plain.txt'],
-  ['deepFile1.yml', 'deepFile2.yml', 'json', 'json.json'],
+  ['deepFile1.yml', 'deepFile2.yml', 'json', 'json.txt'],
 ];
 
 const filename = fileURLToPath(import.meta.url);

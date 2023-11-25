@@ -1,7 +1,9 @@
 import _ from 'lodash';
 
-const stylishFormat = (diff, replacer = ' ', spaceCount = 4) => {
-  function stringifyValue(value, depth = 1) {
+const stylishFormat = (diff) => {
+  const spaceCount = 4;
+  const replacer = ' ';
+  const stringifyValue = (value, depth = 1) => {
     const indentSize = depth * spaceCount;
     const indent = replacer.repeat(spaceCount * depth);
     const bracketIndent = replacer.repeat(indentSize - spaceCount);
@@ -13,23 +15,63 @@ const stylishFormat = (diff, replacer = ' ', spaceCount = 4) => {
         .join('\n')}\n${bracketIndent}}`;
     }
     return value;
-  }
+  };
 
-  const iter = (currentValue, depth) => {
+  const iter = (currentValue, depth, space = 4, rep = ' ') => {
     if (!_.isObject(currentValue)) {
       return `${currentValue}`;
     }
 
-    const indentSize = depth * spaceCount;
-    const currentIndent = replacer.repeat(indentSize);
-    const bracketIndent = replacer.repeat(indentSize - spaceCount);
+    const indentSize = depth * space;
+    const currentIndent = rep.repeat(indentSize);
+    const bracketIndent = rep.repeat(indentSize - space);
+    const currentIndV2 = rep.repeat(indentSize - 2);
     const lines = Object.values(currentValue).flatMap((obj) => {
+      if (obj.type === 'root') {
+        return Object.values(obj.children).flatMap((o) => {
+          if (o.type === 'nested') {
+            const children = iter(o.children, depth + 1);
+            return `${currentIndent}${o.key}: ${children}`;
+          }
+          const generatePrefix = (object, prefixDepth) => {
+            if (object.type === 'added') {
+              return [
+                `+ ${o.key}: ${stringifyValue(o.value, prefixDepth + 1)}`,
+              ];
+            }
+
+            if (object.type === 'deleted') {
+              return [
+                `- ${o.key}: ${stringifyValue(o.value, prefixDepth + 1)}`,
+              ];
+            }
+
+            if (object.type === 'unchanged') {
+              return [
+                `  ${o.key}: ${stringifyValue(o.value, prefixDepth + 1)}`,
+              ];
+            }
+
+            if (object.type === 'changed') {
+              return [
+                `- ${o.key}: ${stringifyValue(o.value1, prefixDepth + 1)}`,
+                `+ ${o.key}: ${stringifyValue(o.value2, prefixDepth + 1)}`,
+              ];
+            }
+            return [];
+          };
+
+          const prefix = generatePrefix(o, depth);
+
+          return Array.isArray(prefix)
+            ? prefix.map((line) => `${currentIndV2}${line}`)
+            : `${currentIndV2}${prefix}`;
+        });
+      }
       if (obj.type === 'nested') {
         const children = iter(obj.children, depth + 1);
         return `${currentIndent}${obj.key}: ${children}`;
       }
-
-      const currentIndV2 = replacer.repeat(indentSize - 2);
 
       const generatePrefix = (object, prefixDepth) => {
         if (object.type === 'added') {

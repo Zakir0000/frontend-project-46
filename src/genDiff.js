@@ -44,4 +44,8 @@ function makeDiff(data1, data2) {
   return diff;
 }
 
-export default makeDiff;
+const buildFullTree = (data1, data2) => [
+  { key: '', type: 'root', children: makeDiff(data1, data2) },
+];
+
+export default buildFullTree;

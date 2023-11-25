@@ -73,4 +73,5 @@ Comparison of 2 nested json files with the output data format 'plain'.
 <h2 id="json-comparison-nested-json">Comparison of nested files with "json" format (JSON)</h2>
 
 Comparison of 2 nested json files with the output data format 'json'.
-[![asciicast](https://asciinema.org/a/pdDqeABYfg0ARrnAwBYB0mrvx.svg)](https://asciinema.org/a/pdDqeABYfg0ARrnAwBYB0mrvx)
+
+[![asciicast](https://asciinema.org/a/z2PxjPSi7bbFfFWuZkHlV8OjQ.svg)](https://asciinema.org/a/z2PxjPSi7bbFfFWuZkHlV8OjQ)
