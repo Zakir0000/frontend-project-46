@@ -3,6 +3,7 @@ import _ from 'lodash';
 const stylishFormat = (diff) => {
   const spaceCount = 4;
   const replacer = ' ';
+
   const stringifyValue = (value, depth = 1) => {
     const indentSize = depth * spaceCount;
     const indent = replacer.repeat(spaceCount * depth);
@@ -15,6 +16,28 @@ const stylishFormat = (diff) => {
         .join('\n')}\n${bracketIndent}}`;
     }
     return value;
+  };
+
+  const generatePrefix = (object, prefixDepth) => {
+    const prefixByType = {
+      added: `+ ${object.key}: ${stringifyValue(
+        object.value,
+        prefixDepth + 1,
+      )}`,
+      deleted: `- ${object.key}: ${stringifyValue(
+        object.value,
+        prefixDepth + 1,
+      )}`,
+      unchanged: `  ${object.key}: ${stringifyValue(
+        object.value,
+        prefixDepth + 1,
+      )}`,
+      changed: [
+        `- ${object.key}: ${stringifyValue(object.value1, prefixDepth + 1)}`,
+        `+ ${object.key}: ${stringifyValue(object.value2, prefixDepth + 1)}`,
+      ],
+    };
+    return prefixByType[object.type] || [];
   };
 
   const iter = (currentValue, depth, space = 4, rep = ' ') => {
@@ -33,33 +56,6 @@ const stylishFormat = (diff) => {
             const children = iter(o.children, depth + 1);
             return `${currentIndent}${o.key}: ${children}`;
           }
-          const generatePrefix = (object, prefixDepth) => {
-            if (object.type === 'added') {
-              return [
-                `+ ${o.key}: ${stringifyValue(o.value, prefixDepth + 1)}`,
-              ];
-            }
-
-            if (object.type === 'deleted') {
-              return [
-                `- ${o.key}: ${stringifyValue(o.value, prefixDepth + 1)}`,
-              ];
-            }
-
-            if (object.type === 'unchanged') {
-              return [
-                `  ${o.key}: ${stringifyValue(o.value, prefixDepth + 1)}`,
-              ];
-            }
-
-            if (object.type === 'changed') {
-              return [
-                `- ${o.key}: ${stringifyValue(o.value1, prefixDepth + 1)}`,
-                `+ ${o.key}: ${stringifyValue(o.value2, prefixDepth + 1)}`,
-              ];
-            }
-            return [];
-          };
 
           const prefix = generatePrefix(o, depth);
 
@@ -72,34 +68,6 @@ const stylishFormat = (diff) => {
         const children = iter(obj.children, depth + 1);
         return `${currentIndent}${obj.key}: ${children}`;
       }
-
-      const generatePrefix = (object, prefixDepth) => {
-        if (object.type === 'added') {
-          return [
-            `+ ${obj.key}: ${stringifyValue(obj.value, prefixDepth + 1)}`,
-          ];
-        }
-
-        if (object.type === 'deleted') {
-          return [
-            `- ${obj.key}: ${stringifyValue(obj.value, prefixDepth + 1)}`,
-          ];
-        }
-
-        if (object.type === 'unchanged') {
-          return [
-            `  ${obj.key}: ${stringifyValue(obj.value, prefixDepth + 1)}`,
-          ];
-        }
-
-        if (object.type === 'changed') {
-          return [
-            `- ${obj.key}: ${stringifyValue(obj.value1, prefixDepth + 1)}`,
-            `+ ${obj.key}: ${stringifyValue(obj.value2, prefixDepth + 1)}`,
-          ];
-        }
-        return [];
-      };
 
       const prefix = generatePrefix(obj, depth);
 

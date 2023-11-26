@@ -4,12 +4,8 @@ function makeDiff(data1, data2) {
   const unionKeys = _.union(Object.keys(data1), Object.keys(data2));
   const sortedUnionKeys = _.sortBy(unionKeys);
 
-  function isPlainObject(obj) {
-    return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
-  }
-
   const diff = sortedUnionKeys.map((key) => {
-    if (isPlainObject(data1[key]) && isPlainObject(data2[key])) {
+    if (_.isPlainObject(data1[key]) && _.isPlainObject(data2[key])) {
       const children = makeDiff(data1[key], data2[key]);
       return { key, type: 'nested', children };
     }
