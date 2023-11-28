@@ -1,10 +1,3 @@
-const stringifyValue = (value) => {
-  if (typeof value === 'object' && value !== null) {
-    return JSON.stringify(value, null, 2);
-  }
-  return String(value);
-};
-
-const jsonFormat = (diff) => stringifyValue(diff);
+const jsonFormat = (value) => JSON.stringify(value, null, '  ');
 
 export default jsonFormat;

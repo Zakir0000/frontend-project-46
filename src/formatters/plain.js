@@ -76,7 +76,7 @@ const plainFormat = (diff) => {
 
     return [...lines].join('\n');
   };
-  return iter(diff, '');
+  return iter(diff.children, '');
 };
 
 export default plainFormat;

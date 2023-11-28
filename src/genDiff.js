@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-function makeDiff(data1, data2) {
+const makeDiff = (data1, data2) => {
   const unionKeys = _.union(Object.keys(data1), Object.keys(data2));
   const sortedUnionKeys = _.sortBy(unionKeys);
 
@@ -38,10 +38,12 @@ function makeDiff(data1, data2) {
     };
   });
   return diff;
-}
+};
 
-const buildFullTree = (data1, data2) => [
-  { key: '', type: 'root', children: makeDiff(data1, data2) },
-];
+const buildFullTree = (data1, data2) => ({
+  key: '',
+  type: 'root',
+  children: makeDiff(data1, data2),
+});
 
 export default buildFullTree;

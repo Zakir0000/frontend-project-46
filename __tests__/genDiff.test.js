@@ -7,7 +7,7 @@ const testCases = [
   ['deepFile1.json', 'deepFile2.json', undefined, 'stylish.txt'],
   ['deepFile1.yml', 'deepFile2.yml', 'stylish', 'stylish.txt'],
   ['deepFile1.json', 'deepFile2.json', 'plain', 'plain.txt'],
-  ['deepFile1.yml', 'deepFile2.yml', 'json', 'json.txt'],
+  ['deepFile1.json', 'deepFile2.json', 'json', 'expected_json.json'],
 ];
 
 const filename = fileURLToPath(import.meta.url);
@@ -25,7 +25,7 @@ describe('genDiff', () => {
       const actualDiff = genDiff(filePath1, filePath2, formatter);
       const expectedDiff = fs.readFileSync(expectedOutputPath, 'utf-8');
 
-      expect(actualDiff).toEqual(expectedDiff);
+      expect(actualDiff).toBe(expectedDiff);
     },
   );
 });

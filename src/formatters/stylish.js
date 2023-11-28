@@ -49,36 +49,28 @@ const stylishFormat = (diff) => {
     const currentIndent = rep.repeat(indentSize);
     const bracketIndent = rep.repeat(indentSize - space);
     const currentIndV2 = rep.repeat(indentSize - 2);
+
     const lines = Object.values(currentValue).flatMap((obj) => {
-      if (obj.type === 'root') {
-        return Object.values(obj.children).flatMap((o) => {
-          if (o.type === 'nested') {
-            const children = iter(o.children, depth + 1);
-            return `${currentIndent}${o.key}: ${children}`;
-          }
+      const prefix = generatePrefix(obj, depth);
+      const linesForType = prefix[obj.type]
+        ? prefix[obj.type].map((line) => `${currentIndV2}${line}`)
+        : [];
 
-          const prefix = generatePrefix(o, depth);
-
-          return Array.isArray(prefix)
-            ? prefix.map((line) => `${currentIndV2}${line}`)
-            : `${currentIndV2}${prefix}`;
-        });
-      }
       if (obj.type === 'nested') {
         const children = iter(obj.children, depth + 1);
         return `${currentIndent}${obj.key}: ${children}`;
       }
 
-      const prefix = generatePrefix(obj, depth);
+      if (obj.type === 'changed') {
+        return prefix.map((line) => `${currentIndV2}${line}`);
+      }
 
-      return Array.isArray(prefix)
-        ? prefix.map((line) => `${currentIndV2}${line}`)
-        : `${currentIndV2}${prefix}`;
+      return [...linesForType, `${currentIndV2}${prefix}`];
     });
 
     return ['{', ...lines, `${bracketIndent}}`].join('\n');
   };
-  return iter(diff, 1);
+  return iter(diff.children, 1);
 };
 
 export default stylishFormat;
