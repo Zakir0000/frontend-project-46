@@ -6,4 +6,9 @@ parserOptions:
   ecmaVersion: latest
   sourceType: module
 rules:
-  {no-undef: off, no-console: off, import/extensions: [error, ignorePackages]}
+  {
+    max-len: off,
+    no-undef: off,
+    no-console: off,
+    import/extensions: [error, ignorePackages],
+  }
