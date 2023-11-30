@@ -1,82 +1,67 @@
-import _ from 'lodash';
-import path from 'path';
+import path from "path";
+
+const customJoin = (arg1, arg2) => {
+  const joinedPath = path.join(arg1, arg2);
+  const dottedPath = joinedPath.replace(path.sep, ".");
+  return dottedPath;
+};
+
+const addSemicolons = (inputString) => {
+  if (typeof inputString === "string") {
+    return `'${inputString}'`;
+  }
+  return inputString;
+};
+const getProperValue = (data) => {
+  if (typeof data !== "object") {
+    return addSemicolons(data);
+  }
+  if (data === null) {
+    return data;
+  }
+  return "[complex value]";
+};
 
 const plainFormat = (diff) => {
-  function customJoin(arg1, arg2) {
-    const joinedPath = path.join(arg1, arg2);
-    const dottedPath = joinedPath.replace(path.sep, '.');
-    return dottedPath;
-  }
-
-  const iter = (currentValue, ancestry) => {
-    if (!_.isObject(currentValue)) {
-      return `${currentValue}`;
-    }
-
-    const lines = currentValue.flatMap((obj) => {
-      const name = obj.key;
+  const prefixByType = {
+    root: (object, ancestry) => {
+      const name = object.key;
       const newAncestry = customJoin(ancestry, name);
-      if (obj.type === 'root') {
-        const children = iter(obj.children, newAncestry);
-        return `${children}`;
-      }
-
-      if (obj.type === 'nested') {
-        const children = iter(obj.children, newAncestry);
-        return `${children}`;
-      }
-
-      const complexVal = '[complex value]';
-
-      function addSemicolons(inputString) {
-        if (typeof inputString === 'string') {
-          return `'${inputString}'`;
-        }
-        return inputString;
-      }
-
-      const getProperValue = (data) => {
-        if (typeof data !== 'object') {
-          return addSemicolons(data);
-        }
-        if (data === null) {
-          return data;
-        }
-        return '[complex value]';
-      };
-
-      const generatePrefix = (object, ancty) => {
-        if (object.type === 'added') {
-          return `Property '${ancty}' was added with value: ${getProperValue(
-            object.value,
-          )}`;
-        }
-
-        if (object.type === 'deleted') {
-          return `Property '${ancty}' was removed`;
-        }
-
-        if (object.type === 'changed' && typeof object.value !== 'object') {
-          return [
-            `Property '${ancty}' was updated. From ${getProperValue(
-              object.value1,
-            )} to ${getProperValue(object.value2)}`,
-          ];
-        }
-
-        return [];
-      };
-
-      const prefix = generatePrefix(obj, newAncestry, complexVal);
-
-      return Array.isArray(prefix)
-        ? prefix.flatMap((line) => `${line}`)
-        : `${prefix}`;
-    });
-
-    return [...lines].join('\n');
+      const children = object.children.flatMap((node) =>
+        prefixByType[node.type](node, newAncestry)
+      );
+      return children.join("\n");
+    },
+    nested: (object, ancestry) => {
+      const name = object.key;
+      const newAncestry = customJoin(ancestry, name);
+      const children = object.children.flatMap((node) =>
+        prefixByType[node.type](node, newAncestry)
+      );
+      return children.join("\n");
+    },
+    added: (object, ancestry) =>
+      ancestry !== "."
+        ? `Property '${ancestry}.${
+            object.key
+          }' was added with value: ${getProperValue(object.value)}`
+        : `Property '${object.key}' was added with value: ${getProperValue(
+            object.value
+          )}`,
+    deleted: (object, ancestry) =>
+      ancestry !== "."
+        ? `Property '${ancestry}.${object.key}' was removed`
+        : `Property '${object.key}' was removed`,
+    changed: (object, ancestry) =>
+      `Property '${ancestry}.${object.key}' was updated. From ${getProperValue(
+        object.value1
+      )} to ${getProperValue(object.value2)}`,
+    unchanged: () => [],
   };
-  return iter(diff.children, '');
+
+  const iter = (currentValue, ancestry) =>
+    prefixByType[currentValue.type](currentValue, ancestry);
+  return iter(diff, "");
 };
 
 export default plainFormat;

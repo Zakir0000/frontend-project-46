@@ -22,7 +22,7 @@ const genDiff = (filePath1, filePath2, format = 'stylish') => {
     getFileExtention(filePath2),
   );
   const diff = buildFullTree(parsedData1, parsedData2);
-
+  // console.log(JSON.stringify(diff, null, 2));
   return mainDiff(diff, format);
 };
 
