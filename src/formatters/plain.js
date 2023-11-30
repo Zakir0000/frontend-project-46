@@ -26,14 +26,14 @@ const plainFormat = (diff) => {
   const prefixByType = {
     root: (object, ancestry) => {
       const name = object.key;
-      const newAncestry = customJoin(ancestry, name);
-      const children = object.children.flatMap((node) => prefixByType[node.type](node, newAncestry));
+      const accum = customJoin(ancestry, name);
+      const children = object.children.flatMap((node) => prefixByType[node.type](node, accum));
       return children.join('\n');
     },
     nested: (object, ancestry) => {
       const name = object.key;
-      const newAncestry = customJoin(ancestry, name);
-      const children = object.children.flatMap((node) => prefixByType[node.type](node, newAncestry));
+      const accum = customJoin(ancestry, name);
+      const children = object.children.flatMap((node) => prefixByType[node.type](node, accum));
       return children.join('\n');
     },
     added: (object, ancestry) => (ancestry !== '.'

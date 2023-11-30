@@ -44,14 +44,14 @@ const stylishFormat = (diff) => {
       )}`,
     ],
     nested: (object, prefixDepth) => {
-      const output = object.children.flatMap((node) => prefixByType[node.type](node, prefixDepth + 1));
-      return `${currentIndent(prefixDepth)}  ${object.key}: {\n${output.join(
+      const out = object.children.flatMap((node) => prefixByType[node.type](node, prefixDepth + 1));
+      return `${currentIndent(prefixDepth)}  ${object.key}: {\n${out.join(
         '\n',
       )}\n${currentIndent(prefixDepth)}  }`;
     },
     root: (object, prefixDepth) => {
-      const output = object.children.flatMap((node) => prefixByType[node.type](node, prefixDepth + 1));
-      return `{\n${output.join('\n')}\n}`;
+      const out = object.children.flatMap((node) => prefixByType[node.type](node, prefixDepth + 1));
+      return `{\n${out.join('\n')}\n}`;
     },
   };
 
