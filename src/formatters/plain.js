@@ -1,59 +1,46 @@
-import path from 'path';
-
-const customJoin = (arg1, arg2) => {
-  const joinedPath = path.join(arg1, arg2);
-  const dottedPath = joinedPath.replace(path.sep, '.');
-  return dottedPath;
-};
-
-const addSemicolons = (inputString) => {
-  if (typeof inputString === 'string') {
-    return `'${inputString}'`;
-  }
-  return inputString;
-};
 const getProperValue = (data) => {
-  if (typeof data !== 'object') {
-    return addSemicolons(data);
-  }
   if (data === null) {
     return data;
   }
-  return '[complex value]';
+  if (typeof data === 'string') {
+    return `'${data}'`;
+  }
+  if (typeof data === 'object') {
+    return '[complex value]';
+  }
+  return data;
+};
+
+const makePath = (node, parentPath = []) => [...parentPath, node].join('.');
+
+const prefixByType = {
+  root: (object, ancestry, iter) => {
+    const children = object.children.flatMap((node) => iter(node, ancestry, iter));
+    return children;
+  },
+  nested: (object, ancestry, iter) => {
+    const children = object.children.flatMap((node) => iter(node, [...ancestry, object.key]));
+
+    return children;
+  },
+  added: (object, ancestry) => `Property '${makePath(
+    object.key,
+    ancestry,
+  )}' was added with value: ${getProperValue(object.value)}`,
+  deleted: (object, ancestry) => `Property '${makePath(object.key, ancestry)}' was removed`,
+  changed: (object, ancestry) => `Property '${makePath(
+    object.key,
+    ancestry,
+  )}' was updated. From ${getProperValue(object.value1)} to ${getProperValue(
+    object.value2,
+  )}`,
+  unchanged: () => [],
 };
 
 const plainFormat = (diff) => {
-  const prefixByType = {
-    root: (object, ancestry) => {
-      const name = object.key;
-      const accum = customJoin(ancestry, name);
-      const children = object.children.flatMap((node) => prefixByType[node.type](node, accum));
-      return children.join('\n');
-    },
-    nested: (object, ancestry) => {
-      const name = object.key;
-      const accum = customJoin(ancestry, name);
-      const children = object.children.flatMap((node) => prefixByType[node.type](node, accum));
-      return children.join('\n');
-    },
-    added: (object, ancestry) => (ancestry !== '.'
-      ? `Property '${ancestry}.${
-        object.key
-      }' was added with value: ${getProperValue(object.value)}`
-      : `Property '${object.key}' was added with value: ${getProperValue(
-        object.value,
-      )}`),
-    deleted: (object, ancestry) => (ancestry !== '.'
-      ? `Property '${ancestry}.${object.key}' was removed`
-      : `Property '${object.key}' was removed`),
-    changed: (object, ancestry) => `Property '${ancestry}.${object.key}' was updated. From ${getProperValue(
-      object.value1,
-    )} to ${getProperValue(object.value2)}`,
-    unchanged: () => [],
-  };
+  const iter = (currentValue, path) => prefixByType[currentValue.type](currentValue, path, iter);
 
-  const iter = (currentValue, ancestry) => prefixByType[currentValue.type](currentValue, ancestry);
-  return iter(diff, '');
+  return iter(diff, []).join('\n');
 };
 
 export default plainFormat;
