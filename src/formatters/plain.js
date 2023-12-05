@@ -8,32 +8,22 @@ const getProperValue = (data) => {
   if (typeof data === 'object') {
     return '[complex value]';
   }
-  return data;
+  return String(data);
 };
 
-const makePath = (node, parentPath = []) => [...parentPath, node].join('.');
+const makePath = (node, parentPath) => [...parentPath, node].join('.');
 
 const prefixByType = {
-  root: (object, ancestry, iter) => {
-    const children = object.children.flatMap((node) => iter(node, ancestry, iter));
-    return children;
-  },
-  nested: (object, ancestry, iter) => {
-    const children = object.children.flatMap((node) => iter(node, [...ancestry, object.key]));
-
-    return children;
-  },
-  added: (object, ancestry) => `Property '${makePath(
-    object.key,
-    ancestry,
-  )}' was added with value: ${getProperValue(object.value)}`,
-  deleted: (object, ancestry) => `Property '${makePath(object.key, ancestry)}' was removed`,
-  changed: (object, ancestry) => `Property '${makePath(
-    object.key,
-    ancestry,
-  )}' was updated. From ${getProperValue(object.value1)} to ${getProperValue(
-    object.value2,
-  )}`,
+  root: (obj, path, iter) => obj.children.flatMap((node) => iter(node, path, iter)),
+  nested: (obj, path, iter) => obj.children.flatMap((node) => iter(node, [...path, obj.key])),
+  added: (obj, path) => `Property '${makePath(
+    obj.key,
+    path,
+  )}' was added with value: ${getProperValue(obj.value)}`,
+  deleted: (obj, path) => `Property '${makePath(obj.key, path)}' was removed`,
+  changed: (obj, path) => `Property '${makePath(obj.key, path)}' was updated. From ${getProperValue(
+    obj.value1,
+  )} to ${getProperValue(obj.value2)}`,
   unchanged: () => [],
 };
 
